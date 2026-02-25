@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الأسطورة سبورت</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="./styles2.css">
+  <style>
+    .product_id {
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 5px;
+    }
+    input[type="search"] {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+  </style>
+</head>
+
+<body>
+<nav>
+  <div class="logo">
+    <i class="fa fa-dumbbell"></i>
+    <h4>الأسطورة سبورت</h4>
+  </div>
+
+  <section>
+    <form id="searchForm">
+      <input type="search" id="searchBox" placeholder="  البحث  ">
+    </form>
+  </section>
+
+  <ul class="nav-items">
+    <li class="nav-item">
+      <a href="index.html" class="nav-link">الصفحة الرئيسية</a>
+      <span class="category-name">SHORT</span>
+    </li>
+
+    <div class="nav-cart">
+      <li class="cart-icon">
+        <a href="cart page.html"><i class="fa fa-cart-shopping"></i></a>
+        <span class="cart-cont" id="cartCount">0</span>
+      </li>
+    </div>
+<!-- 
+    <li class="nav-cart3">
+      <a href="Favorites page.html"><i class="fas fa-heart"></i></a>
+    </li>
+
+    <li class="nav-cart2">
+      <a href="login.html"><i class="fa-solid fa-user"></i></a>
+    </li>-->
+  </ul>
+</nav>
+
+<section class="newest-products" id="products">
+  <div class="products-section">
+    <h4>المنتجات المضافة حديثًا</h4>
+
+<!-- ... الجزء العلوي كما هو بدون تغيير ... -->
+
+<div class="products">
+  <!-- 🩳 منتج 00100 -->
+  <div class="product">
+    <span class="product_id">رقم المنتج: 00103</span>
+    <img src="./img2/t8.jpg" alt="طقم رياضي">
+    <div class="product_name"><a href="#">شورت رياضي فاخر</a></div>
+    <div class="product_price">
+      <a href="#">السعر: SR 65 <i class="fa-solid fa-cart-plus"></i></a>
+    </div><br>
+    <div class="product_description">
+      <a href="#" onclick="openProduct(this)">
+        <i class="fa-solid fa-eye"></i>&nbsp;لتفاصيل المنتج واختيار اللون والمقاس اضغط هنا
+      </a>
+    </div>
+    <!-- تم حذف قسم .qty_input بالكامل -->
+  </div>
+
+  <!-- 🧢 منتج 00101 -->
+  <div class="product">
+    <span class="product_id">رقم المنتج: 00104</span>
+    <img src="./img2/t3.jpg" alt="طقم رياضي طويل">
+    <div class="product_name"><a href="#">شورت رياضي </a></div>
+    <div class="product_price">
+      <a href="#">السعر: SR 55 <i class="fa-solid fa-cart-plus"></i></a>
+    </div><br>
+    <div class="product_description">
+      <a href="#" onclick="openProduct(this)">
+        <i class="fa-solid fa-eye"></i>&nbsp;لتفاصيل المنتج واختيار اللون والمقاس اضغط هنا
+      </a>
+    </div>
+    <!-- تم حذف قسم .qty_input بالكامل -->
+  </div>
+
+  <!-- 👕 منتج 00102 -->
+  <div class="product">
+    <span class="product_id">رقم المنتج: 00105</span>
+    <img src="./img2/t5.jpg" alt="تيشيرت رياضي">
+    <div class="product_name"><a href="#">تيشيرت رياضي خفيف</a></div>
+    <div class="product_price">
+      <a href="#">السعر: SR 59 <i class="fa-solid fa-cart-plus"></i></a>
+    </div><br>
+    <div class="product_description">
+      <a href="#" onclick="openProduct(this)">
+       <i class="fa-solid fa-eye"></i>&nbsp;لتفاصيل المنتج واختيار اللون والمقاس اضغط هنا
+      </a>
+    </div>
+    <!-- تم حذف قسم .qty_input بالكامل -->
+  </div>
+</div>
+
+<script>
+// ✅ حذف كود أزرار + و - بالكامل من JavaScript
+// كل الأكواد الأخرى كما هي بدون أي تغيير
+// تحديث عدد السلة، فتح تفاصيل المنتج، البحث المباشر، والإشعارات المنبثقة
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+updateCartCount();
+
+function openProduct(el) {
+  const product = el.closest(".product");
+  const productData = {
+    id: product.querySelector(".product_id").innerText.replace("رقم المنتج:", "").trim(),
+    name: product.querySelector(".product_name a").innerText,
+    price: product.querySelector(".product_price a").innerText.replace("السعر:", "").trim(),
+    image: product.querySelector("img").src,
+    desc: product.querySelector(".product_name a").innerText + " - منتج عالي الجودة."
+  };
+  localStorage.setItem("currentProduct", JSON.stringify(productData));
+  window.location.href = "product details.html";
+}
+
+// البحث المباشر
+document.getElementById("searchForm").addEventListener("submit", e => e.preventDefault());
+document.getElementById("searchBox").addEventListener("input", () => {
+  const searchTerm = document.getElementById("searchBox").value.trim().toLowerCase();
+  const products = document.querySelectorAll(".product");
+  products.forEach(prod => {
+    const name = prod.querySelector(".product_name a").innerText.toLowerCase();
+    const id = prod.querySelector(".product_id").innerText.toLowerCase();
+    if (name.includes(searchTerm) || id.includes(searchTerm)) {
+      prod.style.display = "block";
+    } else {
+      prod.style.display = "none";
+    }
+  });
+});
+
+// الإشعارات المنبثقة
+const toast = document.createElement("div");
+toast.className = "toast";
+document.body.appendChild(toast);
+
+function showToast(message) {
+  toast.innerText = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2000);   
+}
+
+// عند الضغط على أيقونة السلة داخل المنتج
+document.querySelectorAll(".product_price a").forEach(btn => {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    showToast("⚠️ يجب الدخول إلى تفاصيل المنتج لتحديد اللون والمقاس أولاً");
+  });
+});
+
+
+
+
+
+
+
+
+
+
+// 🧭 حفظ الصفحة الحالية عند الدخول إلى السلة
+localStorage.setItem("lastPage", window.location.href);
+
+
+
+</script>
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الأسطورة سبورت</title>
+
+  <!-- روابط الخطوط والأيقونات -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">
+      <i class="fa fa-dumbbell"></i>
+      <h4>الأسطورة سبورت</h4>
+    </div>
+
+    <ul class="nav-items">
+      <li><a href="#" class="nav-link">الصفحة الرئيسية</a></li>
+      <li><a href="#features" class="nav-link">مميزاتنا</a></li>
+      <li><a href="#products" class="nav-link">أحدث المنتجات</a></li>
+       <li><a href="my_orders.php" class="nav-link">طلباتي  </a></li>
+
+        <div class="nav-cart">
+      <li class="cart-icon">
+        <a href="cart page.html"><i class="fa fa-cart-shopping"></i></a>
+        <span class="cart-cont" id="cartCount">0</span>
+      </li>
+    </div>
+
+
+
+
+
+
+<!-- 
+      <li class="nav-cart3">
+        <a href="Favorites page.html"><i class="fas fa-heart"></i></a>
+      </li>
+      -->
+
+      <li class="nav-cart2">
+        <a href="login.php"><i class="fa-solid fa-user"></i></a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-section">
+      <div class="content">
+        <h4>تسوق بأمان. تسوق بسرعة</h4>
+        <h1>اكتشف أحدث الملابس بأفضل الأسعار في براند الأسطورة سبورت   </h1>
+        <p>الأسطورة سبورت هو أكبر متجر لشراء كل ما هو متعلق بالنادي. <span>جودة وسرعة وأمان</span> أثناء تسوقك.</p>
+        <button class="btn"><a href="#features">إعرف أكثر</a></button>
+      </div>
+
+      <div class="hero1">
+        <img src="img2/img100.jpeg" alt="صورة">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-section">
+      <h4>لماذا نحن أفضل خيار؟</h4>
+      <div class="qualities">
+        <div class="quality">
+          <i class="fas fa-shipping-fast"></i>
+          <h3>سرعة بالتوصيل</h3>
+          <p>طلبك راح يوصل خلال 2-5 أيام فقط.</p>
+        </div>
+
+        <div class="quality">
+          <i class="fas fa-user-shield"></i>
+          <h3>حماية وأمان</h3>
+          <p>حماية كاملة أثناء الدفع الإلكتروني.</p>
+        </div>
+
+        <div class="quality">
+          <i class="fas fa-sort-amount-up-alt"></i>
+          <h3>تشكيلة واسعة</h3>
+          <p>أحدث الملابس والأطقم لدينا دائماً.</p>
+        </div>
+
+        <div class="quality">
+          <i class="fas fa-phone-square"></i>
+          <h3>دعم فني</h3>
+          <p>متاح على مدار الساعة لخدمتك.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="newest-products" id="products">
+    <div class="products-section">
+      <h4>المنتجات المضافة حديثًا</h4>
+      <div class="products">
+        <div class="product">
+          <a href="products1.html"><img src="./img2/تيشيرت 2.jpg" alt="تيشيرت" /></a>
+          <h3>تيشيرت</h3>
+        </div>
+        <div class="product">
+          <a href="products2.html"><img src="./img2/شورت 2.jpg" alt="شورت" /></a>
+          <h3>شورت</h3>
+        </div>
+        <div class="product">
+          <a href="products4.html"><img src="./img2/أطقم.jpg" alt="أطقم" /></a>
+          <h3>أطقم</h3>
+        </div>
+        <div class="product">
+          <a href="products5.html"><img src="./img2/أحذية.jpg" alt="أحذية" /></a>
+          <h3>أحذية</h3>
+        </div>
+        <div class="product">
+          <a href="products6.html"><img src="./img2/حقيبه 2.jpg" alt="حقيبة" /></a>
+          <h3>حقيبة</h3>
+        </div>
+        <div class="product">
+          <a href="products7.html"><img src="./img2/جوارب 2.jpg" alt="اكسسوارات" /></a>
+          <h3>اكسسوارات</h3>
+        </div>
+      </div>
+      <button class="btn"><a href="#">تصفح جميع المنتجات</a></button>
+    </div>
+  </section>
+
+
+<script>
+
+// تحديث رقم السلة
+function updateCartCount(){
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  document.getElementById("cartCount").innerText = cart.length;
+}
+updateCartCount();
+
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛒 سلة المشتريات</title>
+
+<!-- مكتبة الخريطة Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- إضافة البحث في الخريطة (Leaflet Control Geocoder) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+<style>
+body {
+  font-family:'Segoe UI', Tahoma;
+  background:#f8f9fa;
+  padding:20px;
+  direction:rtl;
+  position:relative;
+}
+h2 {
+  text-align:center;
+  margin-bottom:20px;
+}
+.back-link {
+  position:absolute;
+  left:20px;
+  top:20px;
+  background:#457b9d;
+  color:white;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:8px;
+  font-weight:bold;
+  transition:0.3s;
+}
+.back-link:hover { background:#1d3557; }
+.cart-item {
+  background:#fff;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  justify-content:space-between;
+}
+.cart-item img {
+  width:100px;
+  border-radius:10px;
+}
+.item-info {
+  flex:1;
+}
+.item-actions {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+button {
+  border:none;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  color:#fff;
+}
+.delete-btn { background:#e63946; }
+.edit-btn { background:#7c39c9; }
+
+.form-section {
+  background:#fff;
+  padding:20px;
+  border-radius:12px;
+  margin-top:25px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+label {
+  display:block;
+  margin:8px 0 5px;
+  font-weight:bold;
+}
+input, textarea, select {
+  width:100%;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.whatsapp-btn {
+  display:block;
+  width:100%;
+  padding:15px;
+  background:#25D366;
+  color:white;
+  text-align:center;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  text-decoration:none;
+  margin-top:10px;
+}
+.modal {
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+.modal-content {
+  background:#fff;
+  padding:20px;
+  border-radius:10px;
+  width:300px;
+  text-align:center;
+}
+#map {
+  width: 100%;
+  height: 320px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+.leaflet-control-geocoder-form input {
+  text-align:right !important;
+}
+</style>
+</head>
+<body>
+
+<a href="#" class="back-link" id="backLink">⬅️ عودة</a>
+
+<h2>🛍️ سلة المشتريات</h2>
+<div id="cartContainer"></div>
+
+<!-- نموذج بيانات العميل -->
+<div class="form-section">
+  <h3>📋 بيانات العميل</h3>
+  <label>الاسم الكامل:</label>
+  <input type="text" id="customerName" placeholder="اكتب اسمك الكامل" required>
+
+  <label>رقم التواصل (واتساب):</label>
+  <input type="text" id="customerPhone" placeholder="مثال: 05XXXXXXXX" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+
+  <label>البريد الإلكتروني:</label>
+  <input type="email" id="customerEmail" placeholder="example@email.com" required>
+
+  <label>عنوان التوصيل:</label>
+  <div id="map"></div>
+  <textarea id="customerAddress" rows="3" placeholder="الموقع أو العنوان بالتفصيل" required></textarea>
+
+  <label>طريقة الدفع:</label>
+  <select id="paymentMethod" required>
+    <option value="">-- اختر طريقة الدفع --</option>
+    <option value="الدفع عند الاستلام">الدفع عند الاستلام</option>
+    <option value="تحويل بنكي">تحويل بنكي</option>
+    <option value="تابي">تابي</option>
+    <option value="تمارا">تمارا</option>
+  </select>
+
+  <button id="whatsappBtn" class="whatsapp-btn">📱 إرسال الطلب عبر واتساب</button>
+</div>
+
+<!-- نافذة تعديل المنتج -->
+<div class="modal" id="editModal">
+  <div class="modal-content">
+    <h3>تعديل المنتج</h3>
+    <label>المقاس:</label>
+    <select id="editSize">
+      <option value="">-- اختر المقاس --</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+    </select>
+    <label>اللون:</label>
+    <select id="editColor">
+      <option value="">-- اختر اللون --</option>
+      <option value="أسود">أسود</option>
+      <option value="أبيض">أبيض</option>
+      <option value="أحمر">أحمر</option>
+      <option value="رمادي">رمادي</option>
+    </select>
+    <label>الكمية:</label>
+    <input type="number" id="editQuantity" min="1" max="10" value="1">
+    <br>
+    <button id="saveEdit" style="background:#7c39c9;">حفظ التعديلات</button>
+    <button id="cancelEdit" style="background:#999;">إلغاء</button>
+  </div>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartContainer = document.getElementById("cartContainer");
+const modal = document.getElementById("editModal");
+const editSize = document.getElementById("editSize");
+const editColor = document.getElementById("editColor");
+const editQuantity = document.getElementById("editQuantity");
+let editIndex = null;
+let map, marker, selectedLat, selectedLon;
+
+/* 🧾 عرض المنتجات في السلة */
+function renderCart() {
+  cartContainer.innerHTML = "";
+  if (cart.length === 0) {
+    cartContainer.innerHTML = "<p>السلة فارغة حاليا 🛍️</p>";
+    return;
+  }
+
+  let totalAll = 0;
+  let totalQuantity = 0;
+
+  cart.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+
+    const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, "")) || 0;
+    const quantity = parseInt(item.quantity);
+    const totalItem = priceNum * quantity;
+    totalAll += totalItem;
+    totalQuantity += quantity;
+
+    div.innerHTML = `
+      <img src="${item.image}">
+      <div class="item-info">
+        <h3>${item.name}</h3>
+        <p>🆔 رقم المنتج: <strong>${item.id || "غير متوفر"}</strong></p>
+        <p>💰 السعر: ${item.price}</p>
+        <p>🔢 الكمية: ${quantity}</p>
+        <p>🎨 اللون: ${item.color}</p>
+        <p>📏 المقاس: ${item.size}</p>
+        <p>💵 الإجمالي: ${totalItem.toFixed(2)} ر.س</p>
+      </div>
+      <div class="item-actions">
+        <button class="edit-btn" onclick="openEdit(${index})">✏️ تعديل</button>
+        <button class="delete-btn" onclick="deleteItem(${index})">🗑️ حذف</button>
+      </div>
+    `;
+    cartContainer.appendChild(div);
+  });
+
+  const totalDiv = document.createElement("div");
+  totalDiv.style.cssText = "background:#fff;padding:15px;border-radius:10px;margin-top:10px;text-align:center;font-weight:bold;box-shadow:0 2px 5px rgba(0,0,0,0.1)";
+  totalDiv.innerHTML = `💰 <span style="color:#7c39c9;">الإجمالي الكلي لجميع المنتجات: ${totalAll.toFixed(2)} ر.س</span><br>🛒 عدد القطع الإجمالي في السلة: ${totalQuantity}`;
+  cartContainer.appendChild(totalDiv);
+}
+renderCart();
+
+/* تعديل وحذف المنتجات */
+function deleteItem(index) {
+  if (confirm("هل تريد حذف هذا المنتج من السلة؟")) {
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+}
+function openEdit(index) {
+  editIndex = index;
+  editSize.value = cart[index].size;
+  editColor.value = cart[index].color;
+  editQuantity.value = cart[index].quantity;
+  modal.style.display = "flex";
+}
+document.getElementById("saveEdit").addEventListener("click", () => {
+  const newSize = editSize.value.trim();
+  const newColor = editColor.value.trim();
+  const newQty = parseInt(editQuantity.value);
+  if (!newSize || !newColor || !newQty) { alert("⚠️ يرجى تعبئة جميع الحقول"); return; }
+  if (editIndex !== null) {
+    cart[editIndex].size = newSize;
+    cart[editIndex].color = newColor;
+    cart[editIndex].quantity = newQty;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+    modal.style.display = "none";
+  }
+});
+document.getElementById("cancelEdit").addEventListener("click", () => { modal.style.display = "none"; });
+
+/* التحقق من البيانات */
+function validateInputs(name, phone, email, address){
+  const phoneRegex = /^05\d{8}$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!name || !phone || !email || !address){ alert("⚠️ يرجى تعبئة جميع البيانات"); return false; }
+  if(!phoneRegex.test(phone)){ alert("⚠️ رقم الهاتف غير صحيح"); return false; }
+  if(!emailRegex.test(email)){ alert("⚠️ البريد الإلكتروني غير صحيح"); return false; }
+  return true;
+}
+
+/* إرسال الطلب عبر واتساب */
+document.getElementById("whatsappBtn").addEventListener("click", () => {
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const email = document.getElementById("customerEmail").value.trim();
+  const address = document.getElementById("customerAddress").value.trim();
+  const payment = document.getElementById("paymentMethod").value;
+
+  if (!validateInputs(name, phone, email, address)) return;
+  if (!payment) { alert("⚠️ يرجى اختيار طريقة الدفع"); return; }
+  if (cart.length === 0) { alert("السلة فارغة"); return; }
+
+  const totalQuantity = cart.reduce((sum, item) => sum + parseInt(item.quantity), 0);
+  const msgCart = cart.map(item => `🆔 ${item.id || "غير متوفر"}\n${item.name}\n💰 ${item.price}\n🎨 ${item.color}\n📏 ${item.size}\n🔢 ${item.quantity}`).join("\n-----------------\n");
+  const totalPrice = cart.reduce((sum, item) => sum + parseFloat(item.price.replace(/[^0-9.]/g,'')) * parseInt(item.quantity), 0);
+
+  const finalMsg = `📦 طلب جديد
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+✉️ الإيميل: ${email}
+📍 الموقع: https://www.google.com/maps?q=${selectedLat},${selectedLon}
+💳 الدفع: ${payment}
+🧾 الطلب:
+${msgCart}
+🛒 عدد القطع: ${totalQuantity}
+💵 الإجمالي: ${totalPrice.toFixed(2)} ر.س`;
+
+  const whatsappUrl = `https://wa.me/966501871284?text=${encodeURIComponent(finalMsg)}`;
+  window.open(whatsappUrl, "_blank");
+});
+
+/* 🔙 زر العودة */
+document.getElementById("backLink").addEventListener("click", (e) => {
+  e.preventDefault();
+  const lastPage = localStorage.getItem("lastPage");
+  window.location.href = lastPage || "index.html";
+});
+
+/* 🗺️ خريطة تحديد الموقع */
+window.addEventListener("load", () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((pos)=> initMap(pos.coords.latitude,pos.coords.longitude),
+    ()=> initMap(24.7136,46.6753));
+  } else { initMap(24.7136,46.6753); }
+});
+
+function initMap(lat, lon){
+  selectedLat=lat; selectedLon=lon;
+  map=L.map("map").setView([lat, lon], 14);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19, attribution:"© OpenStreetMap"}).addTo(map);
+  marker=L.marker([lat, lon],{draggable:true}).addTo(map);
+  marker.on("dragend",()=>{ const pos=marker.getLatLng(); selectedLat=pos.lat; selectedLon=pos.lng; updateAddressField(); });
+  const geocoder=L.Control.geocoder({defaultMarkGeocode:false, placeholder:"ابحث عن موقعك هنا..."}).on("markgeocode",function(e){
+    const center=e.geocode.center; marker.setLatLng(center); map.setView(center,16); selectedLat=center.lat; selectedLon=center.lng; updateAddressField();
+  }).addTo(map);
+  updateAddressField();
+}
+
+function updateAddressField(){ document.getElementById("customerAddress").value=`📍 موقع التوصيل:\nhttps://www.google.com/maps?q=${selectedLat},${selectedLon}`; }
+
+</script>
+</body>
+</html>

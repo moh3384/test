@@ -1,0 +1,539 @@
+@import url('https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&family=Nerko+One&family=Zain:wght@200;300;400;700;800;900&display=swap');
+*{
+margin: 0 ;
+padding: 0 ;
+box-sizing: border-box;
+}
+
+
+
+body {
+
+    font-family: "Tajawal", sans-serif;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1366px;
+    height: 10vh;
+    margin:0 auto;
+    padding:0 5rem;
+    background-color: #fff;
+} 
+
+
+nav .logo {
+display: flex;
+font-size: 2rem;
+align-items: center;
+}
+
+
+nav .logo i {
+color: blueviolet;
+padding-left: 0.75rem ;
+}
+
+
+nav .logo h4 {
+    font-family: "Zain", sans-serif;
+}
+
+.search {
+    float: right;
+    margin-right: -350px ;
+    margin-top: 20px;
+}
+
+
+nav .nav-items {
+display: flex;
+list-style-type: none;
+}
+
+nav .nav-items .nav-item {
+
+    padding: 0 1rem;
+}
+
+
+
+nav .nav-link {
+text-decoration: none;
+}
+
+nav .nav-link:hover {
+
+    color: blueviolet;
+}
+
+
+nav .nav-cart {
+        list-style-type: none;
+        margin-left: 15px;
+        padding: 2px;
+        font-size: 15px;
+        
+}
+nav .nav-cart2{
+        display: inline-block;
+        margin-left: 15px;
+        padding: 2px ;
+        font-size: 15px;
+}
+
+nav .nav-cart3{
+    display: inline-block;
+    margin-left: 15px;
+    padding: 2px ;
+    font-size: 15px;
+}
+
+nav .nav-cart i {
+    color: black;
+}
+
+nav .nav-cart2 i {
+    color: black;
+}
+
+nav .nav-cart i:hover {
+    color: blueviolet;
+}
+
+nav .nav-cart2 i:hover {
+    color: blueviolet;
+}
+
+nav .nav-cart3 i {
+    color: black;
+}
+
+nav .nav-cart3 i:hover {
+    color: blueviolet;
+}
+
+
+
+.cart-icon{
+position: relative;
+display: inline-block;
+
+}
+
+
+.cart-cont {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    background-color: blueviolet;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    
+}
+
+input[type=search]{
+width: 160px;
+padding: 8px 20px 8px 45px ;
+border: rgb(14, 14, 14) solid 2px;
+font-size: 18px;
+border-radius: 25px;
+background-position: 2% 50%;
+background-repeat: no-repeat;
+background-size: 30px;
+background-image: url('search.svg');
+background-color: transparent;
+transition: 0.5s all ease-in-out;
+ 
+}
+
+input[type=search]:focus,
+
+input[type=search]:not(:placeholder-shown){
+width: 350px;
+background-color: #fff;
+filter: brightness(100%); 
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.newest-products {
+    padding-top: 5rem;
+    background-color: #f8f7fc;
+    }
+    
+    .newest-products .products-section {
+    max-width: 1366px;
+    margin: 0 auto;
+    padding: 0 5rem;
+    display: flex;
+    flex-direction: column;
+
+    
+    }
+    
+    
+    .products-section h4 {
+        color: blueviolet;
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+    }
+    
+    .products-section .products {
+       
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr ;
+        justify-content: flex-start;
+
+        
+    }
+    
+    .products .product {
+        margin: 2rem 0;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+       
+    }
+    
+
+   
+
+
+    .product img {  
+    width: 180px;
+    border-radius: 30px;
+    
+    
+        
+    
+    }
+    
+    .product img:hover {
+       scale: 1.1; 
+    
+    }
+    
+  
+  
+
+
+
+
+
+    .product{
+        position: relative;
+        margin: 10px;
+        margin-top: 50px;
+        width: 300px;
+        padding: 20px;
+        border-radius: 1rem;
+        box-shadow: 0 5px 10px ;
+        margin-bottom: 40px;
+       
+        }
+        
+        
+        .product a {
+            text-decoration: none;
+            color: black;
+            font-size: 15px;
+            font-weight: bold;
+            margin:4px;
+        }
+        
+        
+       
+         
+        
+        
+
+         
+         .product_section a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 1rem;
+       
+         }
+        
+        
+        .product_name {
+        text-align: left;
+            margin-top: 5px;
+            float: left;
+            font-size: 1.1rem;
+         }
+        
+        
+         .product_price {
+            margin-top: 2.6rem;
+            text-align: center;
+         }
+        
+         .product_description {
+        margin-top: 5px;
+        text-align: center;
+         }
+        
+         .qty_input {
+            text-align: center;
+            
+         }
+        
+         .product_price i{
+        color: black;
+         }
+        
+         .product_price i:hover{
+            color: blueviolet;
+             }
+        
+        .unvailable {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+        width: 100px;
+        text-align: center;
+        color: black;
+        font-size: 15px;
+        padding: 5px 3px;
+        border-radius: 1rem;
+        background-color: blueviolet;
+        }
+        
+
+
+
+
+
+        /* 🎯 جعل الأيقونات في أعلى يسار الصفحة بنفس تصميم صفحة التفاصيل */
+
+/* نجعل مجموعة الأيقونات تصطف يساراً بشكل أنيق */
+nav .nav-cart,
+nav .nav-cart2,
+nav .nav-cart3 {
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 1.6rem; /* تكبير الأيقونات قليلاً */
+  position: relative;
+  top: 5px;
+}
+
+/* لون الأيقونات الأساسي */
+nav .nav-cart i,
+nav .nav-cart2 i,
+nav .nav-cart3 i {
+  color: #333;
+  transition: 0.3s;
+}
+
+/* تأثير المرور */
+nav .nav-cart i:hover,
+nav .nav-cart2 i:hover,
+nav .nav-cart3 i:hover {
+  color: blueviolet;
+  transform: scale(1.15);
+}
+
+/* الرقم فوق السلة بنفس تصميم صفحة التفاصيل */
+.cart-cont {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: blueviolet;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* تحسين التباعد بين الأيقونات */
+nav .nav-items {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ✨ تصميم الإشعار المنبثق */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: blueviolet;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: opacity 0.4s, bottom 0.4s;
+  z-index: 999;
+}
+.toast.show {
+  opacity: 1;
+  bottom: 60px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===========================
+        MOBILE FIX
+=========================== */
+
+@media (max-width: 992px){
+
+  nav{
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  /* إلغاء البحث العائم */
+  .search{
+    float: none;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  input[type=search]{
+    width: 100%;
+    max-width: 250px;
+  }
+
+  input[type=search]:focus,
+  input[type=search]:not(:placeholder-shown){
+    width: 100%;
+    max-width: 300px;
+  }
+
+  nav .nav-items{
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+}
+
+
+/* 📱 موبايل */
+@media (max-width: 768px){
+
+  nav{
+    text-align: center;
+  }
+
+  nav .logo{
+    justify-content: center;
+  }
+
+  /* المنتجات */
+  .products-section .products{
+    grid-template-columns: repeat(2,1fr);
+    gap: 1rem;
+    justify-items: center;
+  }
+
+  .product{
+    width: 100%;
+    max-width: 200px;
+    padding: 15px;
+  }
+
+  .product img{
+    width: 100%;
+  }
+
+  .product_name{
+    float: none;
+    text-align: center;
+  }
+
+  .product_price{
+    margin-top: 1rem;
+  }
+
+}
+
+
+/* 📱 أجهزة صغيرة جداً */
+@media (max-width: 480px){
+
+  .products-section .products{
+    grid-template-columns: 1fr;
+  }
+
+  .product{
+    max-width: 260px;
+  }
+
+  nav{
+    padding: 0.8rem;
+  }
+
+  nav .nav-items{
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-cont{
+    top: -5px;
+    right: -5px;
+  }
+
+  input[type=search]{
+    max-width: 200px;
+  }
+
+}
