@@ -14,7 +14,20 @@ CREATE TABLE orders (
     total_price DECIMAL(10,2) NOT NULL,
     order_details LONGTEXT NOT NULL,
     payment_method VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 ADD COLUMN status ENUM('غير مدفوع','مدفوع','تم التوصيل') NOT NULL DEFAULT 'غير مدفوع';
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
+);
+
+
+
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_phone VARCHAR(20),
+      user_name VARCHAR(100),
+    product_id VARCHAR(50),
+    comment TEXT,
+    rating INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
