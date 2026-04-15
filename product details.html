@@ -45,10 +45,32 @@ body { font-family:"Tajawal",sans-serif; background-color:#f8f7fc; margin:0; }
 /* اهتزاز أيقونة السلة عند الإضافة */
 @keyframes shakeCart { 0% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } 75% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); } }
 .shake { animation: shakeCart 0.6s ease; }
+
+.back-link {
+  position: fixed;
+  top: 10px;
+  left: 70px; /* جنب السلة */
+  background: #457b9d;
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 1000;
+  transition: 0.3s;
+}
+
+.back-link:hover {
+  background: #1d3557;
+  transform: scale(1.05);
+}
+
+
 </style>
 </head>
 <body>
 
+  <a href="#" class="back-link" id="backLink">⬅️ عودة</a>
 <!-- شريط أعلى الصفحة -->
 <div class="top-bar">
   <a href="cart page.html"><i class="fa fa-cart-shopping"></i><span class="cart-count" id="cartCount">0</span></a>
@@ -78,7 +100,11 @@ body { font-family:"Tajawal",sans-serif; background-color:#f8f7fc; margin:0; }
     <div class="product-info">
       <h1 id="pname">اسم المنتج</h1>
       <div class="price" id="pprice">99 ر.س</div>
-      <div class="rating">⭐⭐⭐⭐☆ (23 مراجعة)</div>
+      <div id="averageRating" style="font-size:18px; color:#ffb400;">
+⭐ جاري تحميل التقييم...
+</div>
+
+
       <p class="desc">تيشيرت كم قصير قطن 100% قابل للتمدد</p>
 
       <div class="options">
@@ -113,6 +139,41 @@ body { font-family:"Tajawal",sans-serif; background-color:#f8f7fc; margin:0; }
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<hr style="margin:30px 0">
+
+<h3>⭐ التقييم والتعليقات</h3>
+
+<div id="ratingStars" style="font-size:25px; cursor:pointer; color:#ccc;">
+  <i class="fa fa-star"></i>
+  <i class="fa fa-star"></i>
+  <i class="fa fa-star"></i>
+  <i class="fa fa-star"></i>
+  <i class="fa fa-star"></i>
+</div>
+
+<textarea id="commentInput" placeholder="اكتب تعليقك"
+style="width:100%; padding:10px; margin-top:10px; border-radius:8px;"></textarea>
+
+<button class="btn add-cart" onclick="addComment()" style="margin-top:10px;">
+إرسال التعليق
+</button>
+
+<div id="comments" style="margin-top:20px;"></div>
+
+
+
+
 
 <script>
 // تغيير الصورة الرئيسية
@@ -202,6 +263,138 @@ window.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById("mainImg").src = current.image;
   }
 });
+
+
+
+
+
+
+
+
+document.getElementById("backLink").addEventListener("click", function(e) {
+  e.preventDefault();
+
+  const lastPage = localStorage.getItem("lastPage");
+
+  if (lastPage) {
+    window.location.href = lastPage;
+  } else {
+    window.location.href = "index.html";
+  }
+});     
+
+
+
+let rating = 0;
+let product_id = JSON.parse(localStorage.getItem("currentProduct"))?.id || "1";
+
+// ⭐ اختيار النجوم
+document.querySelectorAll("#ratingStars i").forEach((star, index)=>{
+  star.onclick = ()=>{
+    rating = index + 1;
+
+    document.querySelectorAll("#ratingStars i").forEach((s,i)=>{
+      s.style.color = i < rating ? "#ffb400" : "#ccc";
+    });
+  };
+});
+
+// 📥 تحميل التعليقات + التقييم
+function loadComments(){
+  fetch(`get_comments.php?product_id=${product_id}`)
+  .then(res=>res.json())
+  .then(data=>{
+    let html = "";
+    let total = 0;
+
+    data.forEach(c=>{
+      total += parseInt(c.rating);
+
+      html += `
+      <div style="background:#fff;padding:12px;margin:10px 0;border-radius:10px;">
+        <strong>👤 ${c.user_name}</strong><br>
+        <span style="color:#ffb400;">${"⭐".repeat(c.rating)}</span>
+        <p>${c.comment}</p>
+
+        <button onclick="deleteComment(${c.id})">🗑️</button>
+        <button onclick="editComment(${c.id}, \`${c.comment}\`, ${c.rating})">✏️</button>
+      </div>`;
+    });
+
+    document.getElementById("comments").innerHTML = html;
+
+    // ⭐ حساب المتوسط
+    if(data.length > 0){
+      let avg = (total / data.length).toFixed(1);
+      document.getElementById("averageRating").innerHTML =
+        `⭐ ${avg} من 5 (${data.length} تقييم)`;
+    } else {
+      document.getElementById("averageRating").innerHTML =
+        "لا يوجد تقييمات بعد";
+    }
+  });
+}
+
+// ➕ إضافة تعليق
+function addComment(){
+  const text = document.getElementById("commentInput").value;
+
+  if(!text || rating === 0){
+    showToast("⚠️ اكتب تعليق واختر التقييم");
+    return;
+  }
+
+  fetch("save_comment.php",{
+    method:"POST",
+    body:JSON.stringify({
+      comment:text,
+      rating:rating,
+      product_id:product_id
+    })
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.status === "error"){
+      showToast("⚠️ لازم تسجل دخول");
+    } else {
+      showToast("✅ تم إضافة التعليق");
+      document.getElementById("commentInput").value = "";
+      rating = 0;
+      loadComments();
+    }
+  });
+}
+
+// 🗑️ حذف
+function deleteComment(id){
+  fetch(`delete_comment.php?id=${id}`)
+  .then(()=>{
+    showToast("🗑️ تم الحذف");
+    loadComments();
+  });
+}
+
+// ✏️ تعديل
+function editComment(id,text,rate){
+  const newText = prompt("عدل تعليقك", text);
+  if(!newText) return;
+
+  fetch("edit_comment.php",{
+    method:"POST",
+    body:JSON.stringify({
+      id:id,
+      comment:newText,
+      rating:rate
+    })
+  }).then(()=>{
+    showToast("✏️ تم التعديل");
+    loadComments();
+  });
+}
+
+// تحميل أولي
+loadComments();
+
 </script>
 
 </body>
