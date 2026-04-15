@@ -26,16 +26,15 @@ nav {
     justify-content: space-between;
     align-items: center;
     max-width: 1366px;
-    height: 10vh;
     margin: 0 auto;
-    padding: 0 5rem;
+    padding: 15px 5rem;
     background-color: #fff;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 nav .logo {
     display: flex;
-    font-size: 2rem;
+    font-size: 1.8rem;
     align-items: center;
     gap: 0.5rem;
 }
@@ -101,7 +100,7 @@ nav i:hover {
 
 .hero {
     background-color: #f8f7fc;
-    padding: 3rem 0;
+    padding: 40px 0;
 }
 
 .hero-section {
@@ -111,28 +110,26 @@ nav i:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     gap: 2rem;
 }
 
 .hero-section .content {
     flex: 1;
-    min-width: 300px;
 }
 
 .hero-section h4 {
     color: blueviolet;
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
 }
 
 .hero-section h1 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
 }
 
 .hero-section p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: #333;
 }
 
@@ -143,11 +140,11 @@ nav i:hover {
 
 .btn {
     display: inline-block;
-    margin-top: 2rem;
-    padding: 0.75rem 1.5rem;
+    margin-top: 15px;
+    padding: 10px 20px;
     background-color: blueviolet;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -157,8 +154,8 @@ nav i:hover {
 }
 
 .hero1 img {
-    width: 400px;
-    height: 400px;
+    width: 350px;
+    height: 350px;
     object-fit: cover;
     border-radius: 1rem;
 }
@@ -168,7 +165,7 @@ nav i:hover {
 =========================== */
 
 .features {
-    padding: 4rem 0;
+    padding: 40px 0;
 }
 
 .features-section {
@@ -180,16 +177,16 @@ nav i:hover {
 
 .qualities {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .quality {
     background: #f8f7fc;
-    padding: 2rem;
-    border-radius: 1rem;
-    max-width: 250px;
+    padding: 20px;
+    border-radius: 15px;
+    width: 220px;
 }
 
 /* ===========================
@@ -197,7 +194,7 @@ nav i:hover {
 =========================== */
 
 .newest-products {
-    padding: 4rem 0;
+    padding: 40px 0;
     background-color: #f8f7fc;
 }
 
@@ -230,15 +227,16 @@ nav i:hover {
 .product h3 {
     margin-top: 10px;
 }
+
 /* ===========================
-        RESPONSIVE PRO
+        RESPONSIVE
 =========================== */
 
 /* 📱 تابلت */
 @media (max-width: 1024px) {
 
     nav {
-        padding: 0 2rem;
+        padding: 10px 2rem;
     }
 
     .hero-section,
@@ -247,13 +245,6 @@ nav i:hover {
         padding: 0 2rem;
     }
 
-    .hero-section h1 {
-        font-size: 1.6rem;
-    }
-
-    .hero-section p {
-        font-size: 1rem;
-    }
 }
 
 /* 📱 جوال */
@@ -261,64 +252,44 @@ nav i:hover {
 
     /* NAVBAR */
     nav {
-        flex-direction: column;
-        height: auto;
-        padding: 1rem;
-        gap: 10px;
+        padding: 10px 15px;
     }
 
-    nav .logo {
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-
-    nav .nav-items {
-        flex-direction: column;
-        gap: 10px;
+    nav .logo h4 {
+        font-size: 1rem;
     }
 
     .nav-link {
-        font-size: 0.9rem;
+        display: none;
     }
 
     /* HERO */
     .hero-section {
         flex-direction: column;
         text-align: center;
-        padding: 0 1rem;
-    }
-
-    .hero-section h4 {
-        font-size: 1.2rem;
+        padding: 0 10px;
     }
 
     .hero-section h1 {
-        font-size: 1.4rem;
-        line-height: 1.6;
+        font-size: 1.3rem;
+        line-height: 1.5;
     }
 
     .hero-section p {
-        font-size: 0.95rem;
-    }
-
-    .hero1 img {
-        width: 100%;
-        max-width: 220px;
-        margin-top: 15px;
-    }
-
-    /* BUTTON */
-    .btn {
-        width: 100%;
-        padding: 12px;
         font-size: 0.9rem;
     }
 
-    /* FEATURES */
-    .features-section h4 {
-        font-size: 1.3rem;
+    .hero1 img {
+        max-width: 180px;
+        margin-top: 10px;
     }
 
+    .btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    /* FEATURES */
     .qualities {
         flex-direction: column;
         align-items: center;
@@ -326,19 +297,19 @@ nav i:hover {
 
     .quality {
         width: 100%;
-        max-width: 300px;
-        padding: 1.5rem;
+        max-width: 280px;
+        padding: 15px;
     }
 
     .quality h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     .quality p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
-    /* PRODUCTS (نفس طلبك صفين 🔥) */
+    /* PRODUCTS (ثابت صفين) */
     .products {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
@@ -348,49 +319,17 @@ nav i:hover {
         height: 140px;
     }
 
-    /* FOOTER */
-    .site-footer {
-        padding: 20px 10px;
-    }
-
-    .copyright {
-        font-size: 14px;
-    }
-
-    .toggle-header {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .policy-content ul {
-        font-size: 13px;
-    }
 }
 
-/* 📱 أجهزة صغيرة جداً */
+/* 📱 صغير جداً */
 @media (max-width: 480px) {
 
     .hero-section h1 {
-        font-size: 1.2rem;
-    }
-
-    .hero-section h4 {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .hero-section p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
-    .btn {
-        font-size: 0.85rem;
-    }
-
-    .products {
-        grid-template-columns: repeat(2, 1fr); /* ثابت صفين */
-    }
-
-    .quality {
-        padding: 1rem;
-    }
 }
