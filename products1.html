@@ -124,6 +124,10 @@ function updateCartCount() {
 updateCartCount();
 
 function openProduct(el) {
+
+//العودة للصفحة السابقة //
+  localStorage.setItem("lastPage", window.location.href);
+
   const product = el.closest(".product");
   const productData = {
     id: product.querySelector(".product_id").innerText.replace("رقم المنتج:", "").trim(),
