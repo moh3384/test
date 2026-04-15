@@ -18,6 +18,82 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 
+
+
+
+
+
+<style>
+.site-footer {
+  margin-top: 60px;
+  padding: 30px 20px;
+  background: #111;
+  color: #fff;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.return-policy {
+  max-width: 600px;
+  margin: auto;
+  text-align: right;
+}
+
+.toggle-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  background: #222;
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.toggle-header:hover {
+  background: #333;
+}
+
+.policy-content {
+  display: none;
+  margin-top: 10px;
+  background: #1c1c1c;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.policy-content ul {
+  margin: 0;
+  padding-right: 20px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.policy-content li {
+  margin-bottom: 8px;
+}
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
 <body>
   <!-- NAVBAR -->
   <nav>
@@ -62,7 +138,7 @@
       <div class="content">
         <h4>تسوق بأمان. تسوق بسرعة</h4>
         <h1>اكتشف أحدث الملابس بأفضل الأسعار في براند الأسطورة سبورت   </h1>
-        <p>الأسطورة سبورت هو أكبر متجر لشراء كل ما هو متعلق بالنادي. <span>جودة وسرعة وأمان</span> أثناء تسوقك.</p>
+        <p>الأسطورة سبورت هو متجر لشراء كل ما هو متعلق بالنادي. <span>جودة وسرعة وأمان</span> أثناء تسوقك.</p>
         <button class="btn"><a href="#features">إعرف أكثر</a></button>
       </div>
 
@@ -136,6 +212,46 @@
       </div>
       <button class="btn"><a href="#">تصفح جميع المنتجات</a></button>
     </div>
+
+
+
+
+
+    
+<!-- FOOTER -->
+<footer class="site-footer">
+
+  <div class="copyright">
+    جميع الحقوق محفوظة لبراند الأسطورة سبورت © 2026
+  </div>
+
+  <div class="return-policy">
+
+    <div class="toggle-header" onclick="togglePolicy()">
+      <span>شروط الاسترجاع والاستبدال</span>
+      <i class="fa-solid fa-chevron-down" id="arrowIcon"></i>
+    </div>
+
+    <div class="policy-content" id="policyContent">
+      <ul>
+        <li>يمكن استرجاع أو استبدال المنتج خلال يومين فقط من استلام الطلب.</li>
+        <li>يجب أن يكون المنتج بحالته الأصلية وغير مستخدم.</li>
+        <li>يجب وجود جميع الملصقات والتغليف الأصلي.</li>
+        <li>لا يتم استرجاع المنتجات المستخدمة أو التالفة من قبل العميل.</li>
+        <li>في حالة وجود خطأ من المتجر يتم الاسترجاع أو الاستبدال مجاناً.</li>
+        <li>المنتجات المخفضة قد لا تشملها سياسة الاسترجاع حسب العروض.</li>
+        <li>مدة معالجة طلب الاسترجاع من 1 إلى 3 أيام عمل.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+
+
+
+
   </section>
 
 
@@ -147,6 +263,22 @@ function updateCartCount(){
   document.getElementById("cartCount").innerText = cart.length;
 }
 updateCartCount();
+
+
+
+function togglePolicy(){
+  const content = document.getElementById("policyContent");
+  const icon = document.getElementById("arrowIcon");
+
+  if(content.style.display === "block"){
+    content.style.display = "none";
+    icon.style.transform = "rotate(0deg)";
+  } else {
+    content.style.display = "block";
+    icon.style.transform = "rotate(180deg)";
+  }
+}
+
 
 
 </script>
